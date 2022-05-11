@@ -7,6 +7,10 @@ import lombok.Data;
 @AllArgsConstructor
 public class BalanceResponse {
 
+    private String firstName;
+
+    private String lastName;
+
     private String username;
 
     private Integer accountNumber;

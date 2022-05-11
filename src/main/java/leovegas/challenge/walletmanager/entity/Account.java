@@ -28,8 +28,6 @@ public class Account {
 
     private Integer accountNumber;
 
-    private String lastName;
-
     @OneToOne(mappedBy = "account")
     private User user;
 
