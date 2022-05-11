@@ -20,4 +20,12 @@ public class TransactionResponse {
     private Double amount;
 
     private Double balance;
+
+    public TransactionResponse(String transactionId, TransactionType type, Double amount,
+        Double balance) {
+        this.transactionId = transactionId;
+        this.type = type;
+        this.amount = amount;
+        this.balance = balance;
+    }
 }
