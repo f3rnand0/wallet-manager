@@ -10,10 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 public class User {
 
     @Id
@@ -25,8 +25,16 @@ public class User {
 
     private String lastName;
 
+    private String username;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
+    public User(Long id, String firstName, String lastName, String username) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+    }
 }
