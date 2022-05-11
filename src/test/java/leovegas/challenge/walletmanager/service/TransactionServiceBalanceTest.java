@@ -108,7 +108,7 @@ class TransactionServiceBalanceTest {
     }
 
     @Test
-    void givenUsername_whenAPreviousTransactionDoesNotExist_thenReturnBalance() {
+    void givenUsername_whenPreviousTransactionDoesNotExist_thenReturnBalance() {
         Mockito.when(userRepository.findByUsername(user.getUsername()))
             .thenReturn(Optional.of(user));
         Mockito.when(accountRepository.findByUser(user)).thenReturn(Optional.of(account));

@@ -3,16 +3,17 @@ package leovegas.challenge.walletmanager.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import lombok.AllArgsConstructor;
+import javax.persistence.Table;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Entity
+@Table(name = "user")
 @Data
 public class User {
 
@@ -27,8 +28,7 @@ public class User {
 
     private String username;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Account account;
 
     public User(Long id, String firstName, String lastName, String username) {
