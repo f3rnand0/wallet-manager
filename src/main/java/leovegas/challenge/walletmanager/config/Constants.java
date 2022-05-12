@@ -2,10 +2,6 @@ package leovegas.challenge.walletmanager.config;
 
 public class Constants {
 
-    private Constants() {
-
-    }
-
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "10";
     public static final String ATTRIBUTE_ORDERING_TRANSACTION_HISTORY = "creationDate";
@@ -16,4 +12,7 @@ public class Constants {
     public static final String MSG_ACCOUNT_NOT_FOUND_FOR_USER =
         "The specified account number doesn't exist for the indicated user";
     public static final String MSG_NOT_ENOUGH_FUNDS = "Not enough funds";
+    private Constants() {
+
+    }
 }
