@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import leovegas.challenge.walletmanager.controller.IdGenerationController;
 import leovegas.challenge.walletmanager.controller.WalletManagerController;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +20,7 @@ class WalletManagerApplicationTests {
     WalletManagerController walletManagerController;
 
     @Test
-    public void contextLoads() {
+    void contextLoads() {
         assertThat(idGenerationController).isNotNull();
         assertThat(walletManagerController).isNotNull();
     }

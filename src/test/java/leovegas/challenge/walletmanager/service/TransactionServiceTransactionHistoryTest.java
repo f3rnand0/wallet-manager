@@ -41,34 +41,20 @@ import org.springframework.web.server.ResponseStatusException;
 @TestInstance(Lifecycle.PER_CLASS)
 class TransactionServiceTransactionHistoryTest {
 
-    @TestConfiguration
-    static class TransactionServiceTestContextConfiguration {
-
-        @Bean
-        public TransactionService transactionService() {
-            return new TransactionService();
-        }
-    }
-
+    private final Integer pageNumber = 0;
+    private final Integer pageSize = 10;
     @Autowired
     private TransactionService transactionService;
-
     @MockBean
     private UserRepository userRepository;
-
     @MockBean
     private AccountRepository accountRepository;
-
     @MockBean
     private TransactionRepository transactionRepository;
-
     private User user;
     private Account account;
     private Page<Transaction> pagedTransactionList;
     private Pageable pageable;
-
-    private final Integer pageNumber = 0;
-    private final Integer pageSize = 10;
 
     @BeforeAll
     public void init() {
@@ -87,8 +73,8 @@ class TransactionServiceTransactionHistoryTest {
                 Timestamp.valueOf("2022-05-09 11:35:00"), TransactionType.DEBIT, 200.00, 50.00,
                 account));
         pagedTransactionList = new PageImpl<>(transactionList);
-        pageable = PageRequest.of(pageNumber, pageSize,
-            Sort.by(ATTRIBUTE_ORDERING_TRANSACTION_HISTORY).descending());
+        pageable =
+            PageRequest.of(pageNumber, pageSize, Sort.by(ATTRIBUTE_ORDERING_TRANSACTION_HISTORY));
     }
 
     @Test
@@ -96,7 +82,8 @@ class TransactionServiceTransactionHistoryTest {
         Mockito.when(userRepository.findByUsername(user.getUsername()))
             .thenReturn(Optional.of(user));
         Mockito.when(accountRepository.findByUser(user)).thenReturn(Optional.of(account));
-        Mockito.when(transactionRepository.findAll(pageable)).thenReturn(pagedTransactionList);
+        Mockito.when(transactionRepository.findAllByAccount(account, pageable))
+            .thenReturn(pagedTransactionList);
 
         TransactionHistoryResponse transactionHistoryResponse =
             transactionService.getTransactionHistory(user.getUsername(), pageNumber, pageSize);
@@ -141,7 +128,7 @@ class TransactionServiceTransactionHistoryTest {
         Mockito.when(userRepository.findByUsername(user.getUsername()))
             .thenReturn(Optional.of(user));
         Mockito.when(accountRepository.findByUser(user)).thenReturn(Optional.of(account));
-        Mockito.when(transactionRepository.findAll(pageable))
+        Mockito.when(transactionRepository.findAllByAccount(account, pageable))
             .thenReturn(new PageImpl<>(new ArrayList<>()));
 
         TransactionHistoryResponse transactionHistoryResponse =
@@ -158,7 +145,8 @@ class TransactionServiceTransactionHistoryTest {
         Mockito.verify(userRepository, VerificationModeFactory.times(1))
             .findByUsername(user.getUsername());
         Mockito.verify(accountRepository, VerificationModeFactory.times(1)).findByUser(user);
-        Mockito.verify(transactionRepository, VerificationModeFactory.times(1)).findAll(pageable);
+        Mockito.verify(transactionRepository, VerificationModeFactory.times(1))
+            .findAllByAccount(account, pageable);
         Mockito.reset(userRepository);
         Mockito.reset(accountRepository);
         Mockito.reset(transactionRepository);
@@ -176,5 +164,14 @@ class TransactionServiceTransactionHistoryTest {
         Mockito.verify(accountRepository, VerificationModeFactory.times(1)).findByUser(user);
         Mockito.reset(userRepository);
         Mockito.reset(accountRepository);
+    }
+
+    @TestConfiguration
+    static class TransactionServiceTestContextConfiguration {
+
+        @Bean
+        public TransactionService transactionService() {
+            return new TransactionService();
+        }
     }
 }

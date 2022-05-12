@@ -12,8 +12,8 @@ public class IdGenerationController {
     @Autowired
     private IdGenerationService idGenerationService;
 
-    @GetMapping("/api/generateTransaction")
-    public IdResponse generateTransactionId() {
+    @GetMapping("/api/generateId")
+    public IdResponse generateId() {
         return new IdResponse(idGenerationService.generateId());
     }
 
