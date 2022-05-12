@@ -32,27 +32,14 @@ import org.springframework.web.server.ResponseStatusException;
 @TestInstance(Lifecycle.PER_CLASS)
 class TransactionServiceBalanceTest {
 
-    @TestConfiguration
-    static class TransactionServiceTestContextConfiguration {
-
-        @Bean
-        public TransactionService transactionService() {
-            return new TransactionService();
-        }
-    }
-
     @Autowired
     private TransactionService transactionService;
-
     @MockBean
     private UserRepository userRepository;
-
     @MockBean
     private AccountRepository accountRepository;
-
     @MockBean
     private TransactionRepository transactionRepository;
-
     private User user;
     private Account account;
     private Transaction lastTransaction;
@@ -71,7 +58,7 @@ class TransactionServiceBalanceTest {
         Mockito.when(userRepository.findByUsername(user.getUsername()))
             .thenReturn(Optional.of(user));
         Mockito.when(accountRepository.findByUser(user)).thenReturn(Optional.of(account));
-        Mockito.when(transactionRepository.findFirst1ByOrderByCreationDate())
+        Mockito.when(transactionRepository.findFirst1ByAccountOrderByCreationDateDesc(account))
             .thenReturn(Optional.ofNullable(lastTransaction));
 
         BalanceResponse balanceResponse = transactionService.getBalance(user.getUsername());
@@ -112,7 +99,7 @@ class TransactionServiceBalanceTest {
         Mockito.when(userRepository.findByUsername(user.getUsername()))
             .thenReturn(Optional.of(user));
         Mockito.when(accountRepository.findByUser(user)).thenReturn(Optional.of(account));
-        Mockito.when(transactionRepository.findFirst1ByOrderByCreationDate())
+        Mockito.when(transactionRepository.findFirst1ByAccountOrderByCreationDateDesc(account))
             .thenReturn(Optional.empty());
 
         BalanceResponse balanceResponse = transactionService.getBalance(user.getUsername());
@@ -129,7 +116,7 @@ class TransactionServiceBalanceTest {
             .findByUsername(user.getUsername());
         Mockito.verify(accountRepository, VerificationModeFactory.times(1)).findByUser(user);
         Mockito.verify(transactionRepository, VerificationModeFactory.times(1))
-            .findFirst1ByOrderByCreationDate();
+            .findFirst1ByAccountOrderByCreationDateDesc(account);
         Mockito.reset(userRepository);
         Mockito.reset(accountRepository);
         Mockito.reset(transactionRepository);
@@ -147,5 +134,14 @@ class TransactionServiceBalanceTest {
         Mockito.verify(accountRepository, VerificationModeFactory.times(1)).findByUser(user);
         Mockito.reset(userRepository);
         Mockito.reset(accountRepository);
+    }
+
+    @TestConfiguration
+    static class TransactionServiceTestContextConfiguration {
+
+        @Bean
+        public TransactionService transactionService() {
+            return new TransactionService();
+        }
     }
 }

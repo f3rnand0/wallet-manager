@@ -1,6 +1,7 @@
 package leovegas.challenge.walletmanager.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,10 +16,9 @@ public class IdGenerationServiceTest {
     }
 
     @Test
-    public void whenIdRequested_thenIdGenerated() {
+    void whenIdRequested_thenIdGenerated() {
         String id = idGenerationService.generateId();
         assertNotNull(id);
-        assertNotEquals(id, "");
-        assertEquals(id.length(), 36);
+        assertEquals(36, id.length());
     }
 }
