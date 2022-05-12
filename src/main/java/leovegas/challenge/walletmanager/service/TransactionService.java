@@ -44,9 +44,11 @@ public class TransactionService {
 
     public BalanceResponse getBalance(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.MSG_USERNAME_NOT_FOUND));
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                Constants.MSG_USERNAME_NOT_FOUND));
         Account account = accountRepository.findByUser(user).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.MSG_ACCOUNT_NOT_FOUND));
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                Constants.MSG_ACCOUNT_NOT_FOUND));
         Transaction temporalTransaction = new Transaction(null, null, null, 0.00, 0.00, null);
         Transaction lastTransaction =
             transactionRepository.findFirst1ByAccountOrderByCreationDateDesc(account)
@@ -64,7 +66,8 @@ public class TransactionService {
                 Constants.MSG_TRANSACTION_ID_ALREADY_EXISTS);
         } else {
             User user = userRepository.findByUsername(transactionRequest.getUsername()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.MSG_USERNAME_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    Constants.MSG_USERNAME_NOT_FOUND));
             Account account =
                 accountRepository.findByAccountNumberAndUser(transactionRequest.getAccountNumber(),
                     user).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -76,7 +79,8 @@ public class TransactionService {
                     .orElse(new Transaction(null, null, null, 0.00, 0.00, null));
             double newBalance = lastTransaction.getBalance() - transactionRequest.getAmount();
             if (newBalance < 0) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.MSG_NOT_ENOUGH_FUNDS);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    Constants.MSG_NOT_ENOUGH_FUNDS);
             } else {
                 Transaction transactionToSave =
                     new Transaction(transactionRequest.getTransactionId(),
@@ -100,7 +104,8 @@ public class TransactionService {
                 Constants.MSG_TRANSACTION_ID_ALREADY_EXISTS);
         } else {
             User user = userRepository.findByUsername(transactionRequest.getUsername()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.MSG_USERNAME_NOT_FOUND));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    Constants.MSG_USERNAME_NOT_FOUND));
             Account account =
                 accountRepository.findByAccountNumberAndUser(transactionRequest.getAccountNumber(),
                     user).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -125,9 +130,11 @@ public class TransactionService {
     public TransactionHistoryResponse getTransactionHistory(String username, int pageNumber,
         int pageSize) {
         User user = userRepository.findByUsername(username).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.MSG_USERNAME_NOT_FOUND));
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                Constants.MSG_USERNAME_NOT_FOUND));
         Account account = accountRepository.findByUser(user).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.MSG_ACCOUNT_NOT_FOUND));
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                Constants.MSG_ACCOUNT_NOT_FOUND));
 
         Pageable pageable =
             PageRequest.of(pageNumber, pageSize, Sort.by(ATTRIBUTE_ORDERING_TRANSACTION_HISTORY));
