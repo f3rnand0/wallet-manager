@@ -12,6 +12,7 @@ public class Constants {
     public static final String MSG_ACCOUNT_NOT_FOUND_FOR_USER =
         "The specified account number doesn't exist for the indicated user";
     public static final String MSG_NOT_ENOUGH_FUNDS = "Not enough funds";
+
     private Constants() {
 
     }
