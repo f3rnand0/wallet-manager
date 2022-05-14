@@ -1,10 +1,11 @@
-# URL SHORTENER
+# WALLET MANAGER
 
 ## Description
 
 This Java Rest API provides some endpoints to manage wallets from different users. Every user owns
 only one account, and every account is related with zero or more transactions. A transaction can be
 of two types: DEBIT and CREDIT
+This application uses a file-based storage, so it's possible to keep the information across restarts   
 
 ### Endpoints
 
@@ -50,7 +51,7 @@ docker build -t wallet-manager .
 - To execute the application from a single jar to test it, just run:
 
 ```
-DATABASE_USERNAME=sa DATABASE_PASSWORD= java -jar wallet-manager-1.0.0.jar
+DATABASE_URL=jdbc:h2:file:~/walletmanager DATABASE_USERNAME=sa DATABASE_PASSWORD= java -jar wallet-manager-1.0.0.jar
 ```
 
 - To generate a container from the image of the previous step execute:
