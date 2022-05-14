@@ -4,14 +4,15 @@
 
 This Java Rest API provides some endpoints to manage wallets from different users. Every user owns
 only one account, and every account is related with zero or more transactions. A transaction can be
-of two types: DEBIT and CREDIT
+of two types: DEBIT and CREDIT.
 This application uses a file-based storage, so it's possible to keep the information across
-restarts   
+restarts.
 To access the Open API documentation go to http://localhost:8080/swagger-ui/index.html
+A database diagram is inside the docs folder.
 
 ### Endpoints
 
-1. /api/generateId: generates a type 4 UUID string
+1. /api/generateId: generates a type 4 UUID string.
 2. /api/getBalance/{username}: returns the current balance of a user's account by using the provided
    {username}.
 3. /api/debit: debits a specified amount to a user's account by providing an amount and a unique
@@ -25,7 +26,7 @@ To access the Open API documentation go to http://localhost:8080/swagger-ui/inde
 
 ### Prerequisites
 
-- You will need the following installed.
+- You will need the following installed:
 
 ```
 Java 11 or above
